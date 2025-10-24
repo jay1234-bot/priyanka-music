@@ -2,11 +2,12 @@ import asyncio
 import uvloop
 
 try:
-    asyncio.get_running_loop()
+    loop = asyncio.get_event_loop()
 except RuntimeError:
-    asyncio.set_event_loop(asyncio.new_event_loop())
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
-asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+uvloop.install()
 
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus, ParseMode
@@ -61,5 +62,6 @@ class AMBOTOP(Client):
 
     async def stop(self):
         await super().stop()
+
 
 

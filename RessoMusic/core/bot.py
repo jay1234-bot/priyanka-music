@@ -1,6 +1,11 @@
 import asyncio
 import uvloop
 
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 from pyrogram import Client, errors
@@ -56,4 +61,5 @@ class AMBOTOP(Client):
 
     async def stop(self):
         await super().stop()
+
 
